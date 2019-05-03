@@ -1,0 +1,62 @@
+# Exercise 2
+
+class pattern_match: # Constructor defining the string and pattern along with their range
+    def __init__(self, pattern, string):
+        self.m = [[None for _ in range(len(pattern) + 1)] for _ in range(len(string) + 1)]
+        self.pattern = pattern
+        self.string = string
+    
+    # Function defined to match strings and patterns based on various possibilities
+    
+    def match(self):
+        def f(pattern,string,pattern_idx,string_idx):
+            def match(self):
+                if len(self.string) < len(self.pattern.replace('*', '')):
+                    return False
+
+            # String-Pattern match condition 1
+            if pattern_idx == string_idx == 0:
+                self.m[string_idx][pattern_idx] = True
+
+            # String-Pattern match condition 2
+            elif string_idx == 0:
+                self.m[string_idx][pattern_idx] = f(pattern,string,pattern_idx-1,string_idx) and pattern[pattern_idx-1] == '*'
+
+            # memo table init
+            elif pattern_idx == 0:
+                self.m[string_idx][pattern_idx] = False
+
+            # use memo if possible
+            elif self.m[string_idx][pattern_idx] != None:
+                return self.m[string_idx][pattern_idx]
+
+            # choosing between ignoring * and "accepting" it
+            elif pattern[pattern_idx-1] == '*': 
+                self.m[string_idx][pattern_idx] = f(pattern,string,pattern_idx-1,string_idx) or f(pattern,string,pattern_idx,string_idx-1)
+
+            # matching characters
+            elif pattern[pattern_idx-1] == '.' or pattern[pattern_idx-1] == string[string_idx-1]: 
+                self.m[string_idx][pattern_idx] = f(pattern,string,pattern_idx-1,string_idx-1)
+
+            # pattern != string
+            else: 
+                self.m[string_idx][pattern_idx] = False
+
+            return self.m[string_idx][pattern_idx]
+
+        f(self.pattern,self.string,len(self.pattern), len(self.string))
+
+        return self.m[-1][-1]
+
+# Actual pattern matching done here
+
+obj_list = [pattern_match('*ab', 'aba')]
+obj_list += [pattern_match('a*', 'aa')]
+obj_list += [pattern_match('.', 'ab')]
+obj_list += [pattern_match('c*a*b', 'aab')]
+obj_list += [pattern_match('.*', 'ab')]
+
+# Output Module
+
+for x in obj_list:
+    print ('%15s%15s%10r' % (x.string,x.pattern,x.match()))
