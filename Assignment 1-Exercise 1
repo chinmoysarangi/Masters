@@ -1,0 +1,13 @@
+# Exercise 1
+
+def LCS(list1, list2):  # Declaring a string function
+    if not list1 or not list2: # Checks for empty strings
+        return[]
+    l1, l1s, l2, l2s = list1[0], list1[1:], list2[0], list2[1:] # Divides the string lists into a head and a tail
+    if l1 == l2:
+        return [l1] + lcs(l1s, l2s)
+    else:
+        return max(LCS(list1, l2s), LCS(l1s, list2), key=len)
+
+S1, S2 = input('String 1: '), input( 'String 2: ')
+LCS(S1, S2)
