@@ -30,11 +30,11 @@ class pattern_match: # Constructor defining the string and pattern along with th
             elif search.m[string_idx][pattern_idx] != None:
                 return search.m[string_idx][pattern_idx]
 
-            # choosing between ignoring * and "accepting" it
+            # deciding whether to include '*'
             elif pattern[pattern_idx-1] == '*': 
                 search.m[string_idx][pattern_idx] = f(pattern,string,pattern_idx-1,string_idx) or f(pattern,string,pattern_idx,string_idx-1)
 
-            # matching characters
+            # deciding whether to include '.'
             elif pattern[pattern_idx-1] == '.' or pattern[pattern_idx-1] == string[string_idx-1]: 
                 search.m[string_idx][pattern_idx] = f(pattern,string,pattern_idx-1,string_idx-1)
 
@@ -55,6 +55,7 @@ obj_list += [pattern_match('a*', 'aa')]
 obj_list += [pattern_match('.', 'ab')]
 obj_list += [pattern_match('c*a*b', 'aab')]
 obj_list += [pattern_match('.*', 'ab')]
+obj_list += [pattern_match('', '')]
 
 # Output Module
 
