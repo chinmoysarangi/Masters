@@ -1,4 +1,4 @@
-# Exercise 2
+# Exercise 2 : Pattern Matching
 
 class pattern_match: # Constructor defining the string and pattern along with their range
     def __init__(search, pattern, string):
