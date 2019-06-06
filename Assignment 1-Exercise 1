@@ -1,4 +1,4 @@
-# Exercise 1
+# Exercise 1 : Longest Common Subsequence
 
 def LCS(list1, list2):  # Declaring a string function
     if not list1 or not list2: # Checks for empty strings
