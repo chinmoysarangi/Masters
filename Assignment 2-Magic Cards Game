@@ -1,0 +1,110 @@
+""" Card Game in Python(20 Points)
+Game Mechanics: The game is a card game between two entities. The game can be played between two humans or a human and a machine. Choose a set of characters(fictional or real) and their characteristics. Characteristics are represented by a specific numeric value indicating the strength of the characteristic (strenghts may be indicated by negative or positive numeric value). Each card contains only one character and its characteristics.
+Characteristics must be same across all characters but can vary in strength. No characteristic across characters can share the same value.
+The two entities will be called Player 1 and Player 2 hence.
+Distribute the cards equally among player 1 and player 2 face down such that the players cannot see the characters they have been given. Simulate a dice throw by both player 1 and player 2 where the highest number starts first
+Constraints : Each player gets two special spells (God and Resurrect) . These spells are not associated to the characters but is assoicated to the player itself
+Each round is played as below:
+Player 1 : chooses the first card from the deck and can : play a charactertistic he wishes to challenge player 2 with . Player 2 chooses the first card in his deck and compares the charactertistic. The round is won by the Player whose characteristic weighs more and gets 1 point. The 2 cards are then kept faced down on a different deck called 'outdated'(the cards go in the outdated deck in a random order). In round 2 , The player who won the previous round begins by choosing the next card in his deck and the round proceeds as above.
+Spells:
+In each round a player can decide to play the God spell or the Resurrect spell along with challenging with a characteristic. God Spell: After choosing the next card and characteristic on his deck, player 1 can play the God spell allowing the player to force a card number to be played by the Player 2. Player 1 can choose any card number he wants and player 2 should then compare the charactestic on the choosen card.
+Resurrect Spell: Before choosing the next card and characteristic, player 1 can choose Resurrect spell. Choosing Resurrect will create a random number and the card at the that random number position from the 'outdated' deck will be choosen. The card present at the random number at the 'outdated' deck will be added back to the top of the player deck. The player must then play this card.
+When Player 1 plays the God spell , Player 2 cannot play the God spell as he is forced to choose the card , however player 2 can play the Resurrect spell and add a new card to the top of his deck. Player 1 can then force the resurrected card to be choosen or can go with his earlier choice.
+God and Resurrect spell can only be played once by each Player."""
+
+import sys
+import time
+import random
+import enum
+from enum import Enum
+from enum import IntEnum
+from random import shuffle
+
+# Dice roll between two players
+def Dice_Roll():
+    rolled_num1 = random.randint(1,6) # Random draw for Player 1
+    rolled_num2 = random.randint(1,6) # Random draw for Player 2
+    print("\nPlayer 1: " + str (rolled_num1) + "\nPlayer 2: " + str (rolled_num2))
+
+    # Deciding on who draws card first
+    if rolled_num1 > rolled_num2:
+        print ('\nPlayer 1 starts the game!')
+    elif rolled_num1 < rolled_num2:
+        print ('\nPlayer 2 starts the game!')
+    else:
+        print ("\nBoth players got the same number. Rolling the Dice again!")
+        Dice_Roll()
+Dice_Roll()
+
+# Assign values to the Card Characters
+
+class Card_Characters(object): # Class defining the characters
+
+    def SubZero(self):
+        Strength, Fatality, Speed = 95, 88, 90
+        print("\nSubZero: \n {0}: {1}, {2}: {3}, {4}: {5} ".format('Strength', Strength, 'Fatality', Fatality, 'Speed', Speed))
+        
+    def Scorpion(self):
+        Strength, Fatality, Speed = 98, 93, 97
+        print("\nScorpion: \n {0}: {1}, {2}: {3}, {4}: {5} ".format('Strength', Strength, 'Fatality', Fatality, 'Speed', Speed))
+
+    def LiuKang(self):
+        Strength, Fatality, Speed = 91, 86, 83
+        print("\nLiuKang: \n {0}: {1}, {2}: {3}, {4}: {5} ".format('Strength', Strength, 'Fatality', Fatality, 'Speed', Speed))
+
+    def Jax(self):
+        Strength, Fatality, Speed = 99, 95, 93
+        print("\nJax: \n {0}: {1}, {2}: {3}, {4}: {5} ".format('Strength', Strength, 'Fatality', Fatality, 'Speed', Speed))
+
+    def Sonya(self):
+        Strength, Fatality, Speed = 87, 97, 95
+        print("\nSonya: \n {0}: {1}, {2}: {3}, {4}: {5} ".format('Strength', Strength, 'Fatality', Fatality, 'Speed', Speed))
+    
+    def ShaoKahn(self):
+        Strength, Fatality, Speed = 100, 98, 85
+        print("\nShaoKahn: \n {0}: {1}, {2}: {3}, {4}: {5} ".format('Strength', Strength, 'Fatality', Fatality, 'Speed', Speed))
+        print()
+
+card_char = Card_Characters() # Object assignment to the Class of Characters
+
+# Block display characters available for Game Play
+
+print ("\nCharacters available to play are:")
+card_char.SubZero()
+card_char.Scorpion()
+card_char.LiuKang()
+card_char.Jax()
+card_char.Sonya()
+card_char.ShaoKahn()
+
+def GameOptions():
+    input1 = input("Enter 1 to Start the Game or Enter 2 to Quit!\n")
+    if input1 == 2:
+        print ('Have a good day. Bye!')
+        exit
+    elif input1 == 1:
+        print ('Let us start the game')
+        Game_Play()
+
+def Game_Play():
+
+    if card_char.Jax(Strength) > card_char.LiuKang(Strength):
+        print ('Jax wins')
+    else:
+        print ('LiuKiang wins')
+
+# Defining the Spells as a separate class
+
+class Spell():
+	def __init__(self, data):
+		self.GodSpell = False
+		self.ResurrectSpell = False
+		super().__init__(data)
+
+	def get_damage(self, amount, target):
+		amount = super().get_damage(amount, target)
+		if not self.GodSpell:
+			amount = self.controller.get_spell_damage(amount)
+		if self.ResurrectSpell:
+			amount *= 2
+		return amount
