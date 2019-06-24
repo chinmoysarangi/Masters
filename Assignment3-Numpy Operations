@@ -1,0 +1,132 @@
+# All the codes need to be run separately. I have consolidated them for the ease of checking them in one place
+
+# Exercise 1: This module replaces odd numbers with -1
+
+import numpy as np
+
+arraylist = []
+
+a = int(input("Size of array:"))
+for i in range(a):
+    arraylist.append(int(input("Element:")))
+arraylist = np.array(arraylist)
+print("Initial Array was: ", np.floor(arraylist))
+
+arraylist[arraylist % 2 == 1] = -1
+print ("My New Array is: ", np.floor(arraylist))
+
+#  Exercise 2: Converts 1D array into 2D form
+
+import numpy as np
+
+arr = np.arange(10) # Numbers from 0 to 9
+print (arr.reshape(2, -1))  # Setting to -1 automatically decides the number of columns
+
+# Exercie 3: Creating a pattern without hardcoding
+
+import numpy as np
+arraylist = []
+
+a = int(input("Size of array:"))
+for i in range(a):
+    arraylist.append(int(input("Element:")))
+arraylist = np.array(arraylist)
+print("Initial Array was: ", np.array(arraylist))
+
+print ("My new array is: ", np.r_[np.repeat(arraylist, 3), np.tile(arraylist, 3)])
+
+# Exercie 4: Common items between two arrays
+
+import numpy as np
+arraylist1 = []
+arraylist2 = []
+
+a = int(input("Size of array1:"))
+for i in range(a):
+    arraylist1.append(int(input("Element:")))
+arraylist1 = np.array(arraylist1)
+print("Initial Array1 was: ", np.array(arraylist1))
+
+b = int(input("Size of array2:"))
+for j in range(b):
+    arraylist2.append(int(input("Element:")))
+arraylist2 = np.array(arraylist2)
+print("Initial Array2 was: ", np.array(arraylist2))
+
+print ("Array Intersection elements are: ", np.intersect1d(arraylist1, arraylist2))
+
+# Exercie 5: Get positions where array elements of two arrays match
+
+import numpy as np
+arraylist1 = []
+arraylist2 = []
+
+# First Array
+a = int(input("Size of array1:"))
+for i in range(a):
+    arraylist1.append(int(input("Element:")))
+arraylist1 = np.array(arraylist1)
+
+# Second Array
+
+b = int(input("Size of array2:"))
+for j in range(b):
+    arraylist2.append(int(input("Element:")))
+arraylist2 = np.array(arraylist2)
+
+print("First Array is: ", np.array(arraylist1))
+print("Second Array is: ", np.array(arraylist2))
+
+print ("The match locations are: ", np.where(arraylist1 == arraylist2))
+
+# Exercie 6: Get a 2D array with random floating numbers
+
+import numpy as np
+array = []
+
+array = np.random.uniform(5,10, size=(5,3))
+print (array)
+
+# Exercie 7: Limiting the number of elements in an array to 6 elements
+
+import numpy as np
+
+arraylist = []
+
+a = int(input("Size of array:"))
+arraylist = np.arange(a)
+print("Initial Array was: ", np.array(arraylist))
+
+np.set_printoptions(threshold=6)
+print ("The reduced display array is: ", arraylist)
+
+# Exercise 8: Pretty print the scientific numbers without the exponential component
+
+import numpy as np
+
+np.set_printoptions(suppress=False)
+
+np.random.seed(100)
+rand_arr = np.random.random([3,3])/1e3
+print ("\nMy random array is: \n\n", rand_arr)
+
+np.set_printoptions(suppress=True)
+print ("\nMy Pretty printed array is: \n\n", rand_arr)
+
+# Exercise 9: Swap two columns in a 2D array
+
+import numpy as np
+
+myarray = np.arange(9).reshape(3,3)
+print ("\nOriginal Array is: \n\n", myarray)
+
+print ("\nSwapped Columns Array is: \n\n", myarray[:, [0, 2, 1]])
+
+# Exercise 10: Swapping 2 rows in a 2D array
+
+import numpy as np
+
+myarray = np.arange(9).reshape(3,3)
+print ("\nOriginal Array is: \n\n", myarray)
+
+print ("\nSwapped Row Array is: \n\n", myarray[[2, 0, 1], :])
